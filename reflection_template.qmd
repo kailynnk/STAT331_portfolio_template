@@ -432,30 +432,6 @@ ggplot(data = timeSummary,
 -   Example 1
 
 ```{r dvs-3-1}
-# Lab 4 Revised (Question 5)
-metroSummary <- avocadoMetro |> select(`Total Volume`, region) |> 
-  group_by(region) |> summarise(sumTotalVol = sum(`Total Volume`),
-                                meanTotalVol = mean(`Total Volume`)) |> 
-  slice_max(meanTotalVol, n = 5)
-
-top5 <- avocadoMetro |> semi_join(metroSummary, by = "region")
-
-# changing the limits source: https://ggplot2.tidyverse.org/reference/lims.html
-# color palette: https://statisticsglobe.com/scale-colour-fill-brewer-rcolorbrewer-package-r
-ggplot(data = top5, mapping = aes(y = region, x = `Total Volume`, fill = region)) +
-  geom_boxplot(size = 0.3) + 
-  labs(x = "Total Volume Sold/Week", 
-       y = "US City", 
-       title = "Total Volume of Avocados Sold Across Top 5 Selling Cities in the USA",
-       fill = "City") +  
-  theme_light() +
-  theme(plot.title = element_text(face = "bold", 
-                                  size = 13),
-        axis.title = element_text(size = 10, 
-                                  face = "bold"),
-        axis.text = element_text(size = 8), 
-        legend.position = "none") + 
-  scale_fill_brewer(palette = "RdYlBu")
 ```
 
 -   Example 2
