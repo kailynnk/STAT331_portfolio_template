@@ -47,7 +47,7 @@ military <- read_xlsx(here::here("data",
 read_tsv("ages_tab.txt")
 ```
 
-**WD-2: I can select necessary columns from a dataset.**
+**WD-2: I can select necessary columns from a data set.**
 
 ```{r wd-2}
 # Lab1 (Quetsion 3)
@@ -60,7 +60,7 @@ timeSummary <- surveys |>
   summarise(meanWeight = mean(weight))
 ```
 
-**WD-3: I can filter rows from a dataframe for a *variety* of data types (e.g., numeric, integer, character, factor, date).**
+**WD-3: I can filter rows from a data frame for a *variety* of data types (e.g., numeric, integer, character, factor, date).**
 
 -   numeric
 
@@ -107,7 +107,7 @@ suspects <- suspects |>
   filter(pm(Time.Spotted))
 ```
 
-**WD-4: I can modify existing variables and create new variables in a dataframe for a *variety* of data types (e.g., numeric, integer, character, factor, date).**
+**WD-4: I can modify existing variables and create new variables in a data frame for a *variety* of data types (e.g., numeric, integer, character, factor, date).**
 
 -   numeric
 
@@ -153,7 +153,7 @@ suspects <- suspects |>
   filter(pm(Time.Spotted))
 ```
 
-**WD-5: I can use mutating joins to combine multiple dataframes.**
+**WD-5: I can use mutating joins to combine multiple data frames.**
 
 -   `left_join()`
 
@@ -213,7 +213,7 @@ avocadoMetro <- avocado |> anti_join(state_minor, by = "region") |>
   anti_join(major_regions, by = "region")
 ```
 
-**WD-7: I can pivot dataframes from long to wide and visa versa**
+**WD-7: I can pivot dataf rames from long to wide and vise versa**
 
 -   `pivot_longer()`
 
@@ -323,7 +323,7 @@ summaryCal <- californiaAvocado |>
 -   numeric variables
 
 ```{r dvs-1-num}
-# Lab 2 Revised (Question 6)
+# Lab 2 (Question 6)
 ggplot(data = surveys, 
        mapping = aes(x = weight, 
                      y = hindfoot_length)) +
@@ -435,33 +435,30 @@ ggplot(data = timeSummary,
 -   Example 1
 
 ```{r dvs-3-1}
-# Challenge 2
-myPalette <- c("#A30505", "#6C3483", "#2874A6", "#117A65", "#08880F", "#F3c408", "#A04000", "#616A6B", "#212F3D")
+# Lab 4 Revised (Question 5)
+# metroSummary <- avocadoMetro |> select(`Total Volume`, region) |> 
+  group_by(region) |> summarise(sumTotalVol = sum(`Total Volume`),
+                                meanTotalVol = mean(`Total Volume`)) |> 
+  slice_max(meanTotalVol, n = 5)
 
-ggplot(data = surveys,
-  mapping = aes(x = species, 
-                y = weight,
-                color = genus)) + 
-  geom_jitter(size = 0.5, 
-              alpha = 0.5) + 
-  geom_boxplot(alpha = 0.1, 
-               outlier.shape = NA)  +
-  labs(x = "Penguin Species", 
-       y = "Penguin Weight", 
-       title = "The Weight Distribution of Penguins Across Different Species", 
-       color = "Genus") +
-  scale_x_discrete(guide = guide_axis(n.dodge = 2)) +
-  # manual color scale
-  scale_color_manual(values = myPalette) +
+top5 <- avocadoMetro |> semi_join(metroSummary, by = "region")
+
+# changing the limits source: https://ggplot2.tidyverse.org/reference/lims.html
+# color palette: https://statisticsglobe.com/scale-colour-fill-brewer-rcolorbrewer-package-r
+ggplot(data = top5, mapping = aes(y = region, x = `Total Volume`, fill = region)) +
+  geom_boxplot(size = 0.3) + 
+  labs(x = "Total Volume Sold/Week", 
+       y = "US City", 
+       title = "Total Volume of Avocados Sold Across Top 5 Selling Cities in the USA",
+       fill = "City") +  
+  theme_light() +
   theme(plot.title = element_text(face = "bold", 
-                                  size = 12),
-        axis.title = element_text(size = 8, 
+                                  size = 13),
+        axis.title = element_text(size = 10, 
                                   face = "bold"),
-        axis.text = element_text(size = 6),
-        legend.title = element_text(size = 10, 
-                                    face = "bold"),
-           legend.text = element_text(size = 7),
-        legend.key.size = unit(.3, "cm"))
+        axis.text = element_text(size = 8), 
+        legend.position = "none") + 
+  scale_fill_brewer(palette = "RdYlBu")
 ```
 
 -   Example 2
@@ -513,7 +510,7 @@ summaryCal <- californiaAvocado |>
 -   Example 2
 
 ```{r dvs-4-2}
-# Challenge 3 Revised (Question 5.1.1 Male vs. Female)
+# Challenge 3 (Question 5.1.1 Male vs. Female)
 summary1 <- hiphop_coll |> group_by(sex) |> 
   summarize(across(intl:unclassifiable, mean, na.rm = TRUE))
 
@@ -550,7 +547,7 @@ summaryCal <- californiaAvocado |>
 -   Example 2
 
 ```{r dvs-5-2}
-# Challenge 3 Revised (Question 5.1.1 Male vs. Female)
+# Challenge 3 (Question 5.1.1 Male vs. Female)
 summary1 <- hiphop_coll |> group_by(sex) |> 
   summarize(across(intl:unclassifiable, mean, na.rm = TRUE))
 
@@ -587,7 +584,7 @@ summaryCal <- californiaAvocado |>
 -   Example 2
 
 ```{r dvs-6-2}
-# Challenge 3 Revised (Question 5.1.1 Male vs. Female)
+# Challenge 3 (Question 5.1.1 Male vs. Female)
 summary1 <- hiphop_coll |> group_by(sex) |> 
   summarize(across(intl:unclassifiable, mean, na.rm = TRUE))
 
@@ -604,7 +601,7 @@ which.max(absdiff1)
 -   Example 1
 
 ```{r dvs-7-1}
-# Challenge 3 Revised (Question 5.1.1 Male vs. Female)
+# Challenge 3 (Question 5.1.1 Male vs. Female)
 summary1 <- hiphop_coll |> group_by(sex) |> 
   summarize(across(intl:unclassifiable, mean, na.rm = TRUE))
 
@@ -649,7 +646,7 @@ californiaAvocado <- avocadoMetro |>
 -   `across()`
 
 ```{r pe-1-across}
-# Challenge 3 Revised (Question 5.1.1 Male vs. Female)
+# Challenge 3 (Question 5.1.1 Male vs. Female)
 summary1 <- hiphop_coll |> group_by(sex) |> 
   summarize(across(intl:unclassifiable, mean, na.rm = TRUE))
 
