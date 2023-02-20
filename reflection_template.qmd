@@ -157,7 +157,6 @@ suspects <- suspects |>
 ```{r wd-5-left}
 # Preview Activity 4.3 (Question b)
 qB <- left_join(prof_course, prof_info)
-
 ```
 
 -   `right_join()`
@@ -210,7 +209,7 @@ avocadoMetro <- avocado |> anti_join(state_minor, by = "region") |>
   anti_join(major_regions, by = "region")
 ```
 
-**WD-7: I can pivot dataf rames from long to wide and vise versa**
+**WD-7: I can pivot dataframes from long to wide and vise versa**
 
 -   `pivot_longer()`
 
@@ -739,11 +738,11 @@ which.max(absdiff1)
 
 ## Revising My Thinking
 
-Despite showing proficiency in most of the learning targets, I still face some issues such as lacking plot labels and code repetition. This can be seen in my earlier labs where I failed to put proper axis labels. There was also a lot of repeating and inefficient code in my initial Lab 3 submission. Because of proper feedback, I was able to revise my thinking and apply the feed backs I received in my future lab assignments. I use my Lab 5 Time Plot as a reference to clear and readable plots, as believe that to be my cleanest one. Additionally, after receiving the efficiency feedback in Lab 3, I began to take it into more consideration. When summarizing data across columns greater than 2, I utilize the `across()` helper to avoid repetition (this was done through a Challenge revision). I have also continued to show improvement and learning in this aspect through my Lab 4 when I used `%in%` when filtering a data set. Overall, I believe to have demonstrated a proficiency in revised thinking throughout the entirety of the course. I take each feedback from my professor and peers into account in order to avoid making the same mistakes in the future. I have also always made sure to submit a revision each week despite having only minor issues with my code.
+Despite showing proficiency in most of the learning targets, I still face some issues such as lacking plot labels and code repetition. This can be seen in my earlier labs where I failed to put proper axis labels. There was also a lot of repeating and inefficient code in my initial Lab 3 submission. Because of proper feedback, I was able to revise my thinking and apply the feed backs I received in my future lab assignments. I use my Lab 5 Time Plot as a reference to clear and readable plots, and believe that to be my cleanest and favorite one. Additionally, after receiving the efficiency feedback in Lab 3, I began to take it into more consideration. When summarizing data across columns greater than 2, I utilize the `across()` helper to avoid repetition (this was done through a Challenge revision). I have also continued to show improvement and learning in this aspect through my Lab 4 when I used `%in%` when filtering multiple categories in a specific column. Overall, I believe to have demonstrated a proficiency in revised thinking throughout the entirety of the course. I take each feedback from my professor and peers into account in order to avoid making the same mistakes in the future. I have also always made sure to submit a revision each week despite having only minor issues with my code.
 
 ## Extending My Thinking
 
-I believe to have demonstrated extended thinking in most of the activities as I usually refer to external resources. A lot of my extended thinking can be demonstrated by my plots and visuals, especially with its details and aesthetics. A lot of my data visualization examples in this portfolio shows that I try to make my plot as aesthetically pleasing by using different plot themes, changing plot label fonts and sizes, and using a color palette, `facet_grid()` function, and an `x_scale_discrete` function. Throughout the course, I have also made use of different Quarto options to spice up the appearance of my HTML file. This is especially demonstrated in my Lab 4 where I incorporated a table of contents and a different Quarto theme.
+I believe to have demonstrated extended thinking in most of the activities as I usually refer to external resources. A lot of my extended thinking can be demonstrated by my plots and visuals, especially with its details and aesthetics. A lot of my data visualization examples in this portfolio show that I try to make my plot as aesthetically pleasing by using different plot themes, changing plot label fonts and sizes, and using a color palette, `facet_grid()` function, and an `x_scale_discrete` function. Throughout the course, I have also made use of different Quarto options to spice up the appearance of my HTML file. This is especially demonstrated in my Lab 4 where I incorporated a table of contents and a different Quarto theme.
 
 ## Peer Support & Collaboration
 
