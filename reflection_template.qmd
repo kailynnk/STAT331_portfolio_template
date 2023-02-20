@@ -50,9 +50,6 @@ read_tsv("ages_tab.txt")
 **WD-2: I can select necessary columns from a data set.**
 
 ```{r wd-2}
-# Lab1 (Quetsion 3)
-dist <- cars$dist
-
 # Lab5 (Question 2.2)
 timeSummary <- surveys |> 
   select(year, genus, weight) |> 
@@ -436,7 +433,7 @@ ggplot(data = timeSummary,
 
 ```{r dvs-3-1}
 # Lab 4 Revised (Question 5)
-# metroSummary <- avocadoMetro |> select(`Total Volume`, region) |> 
+metroSummary <- avocadoMetro |> select(`Total Volume`, region) |> 
   group_by(region) |> summarise(sumTotalVol = sum(`Total Volume`),
                                 meanTotalVol = mean(`Total Volume`)) |> 
   slice_max(meanTotalVol, n = 5)
