@@ -50,7 +50,7 @@ read_tsv("ages_tab.txt")
 **WD-2: I can select necessary columns from a data set.**
 
 ```{r wd-2}
-# Lab5 (Question 2.2)
+# Lab 5 (Question 2.2)
 timeSummary <- surveys |> 
   select(year, genus, weight) |> 
   group_by(year, genus) |>
@@ -62,21 +62,18 @@ timeSummary <- surveys |>
 -   numeric
 
 ```{r wd-3-numeric}
-# Lab 4 (Question 3)
-avocadoMajor |> filter(year == 2017, type == "organic") |> 
-  group_by(region) |> 
-  summarise(regionTotal = sum(smallHaas)) |> 
-  slice_max(region)
+# Lab 3 (Question 11)
+summary1 <- hiphop_clean |> filter(age < 20) |> 
+  group_by(word) |> 
+  summarise(meanFamiliarity = mean(familiarity))
 ```
 
 -   character -- specifically a string
 
 ```{r wd-3-string}
-# Lab 4 (Question 3)
-avocadoMajor |> filter(year == 2017, type == "organic") |> 
-  group_by(region) |> 
-  summarise(regionTotal = sum(smallHaas)) |> 
-  slice_max(region)
+# Lab 9 (Part 2)
+allison_f <- aNames  %>% filter(Name == "Allison",
+                                Sex == "F")  
 ```
 
 -   factor
@@ -121,21 +118,30 @@ suspects_ |>
 -   character -- specifically a string
 
 ```{r wd-4-string}
-# Lab 3 (Question 7)
-hiphop_clean <- hiphop |> 
-  mutate(ethnic_2 = case_when(ethnic == "white" ~ "white", TRUE ~ "non-white"))
+# Lab 8 (PaRt 1)
+pluralize_gift <- function(gift) {
+
+  gift <- gift |>
+    str_c(string = "s", sep = "") |>
+    str_replace(pattern = "ys$", replacement = "ies") |>
+    str_replace(pattern = "gooses$", replacement = "geese")
+  
+  return(gift)
+
+}
 ```
 
 -   factor
 
 ```{r wd-4-factor}
-# Lab 3 (Question 5)
-hiphop_clean <- hiphop |> 
-  mutate(across(c(subj, sex, ethnic, jayz:bieber), as.factor)) |>
-  mutate(numPreferredArtists = 
-           replace_na(numPreferredArtists, 0),
-         numOverallArtists = 
-           replace_na(numPreferredArtists, 0))
+# Lab 5 (Question 3.3)
+weekDays <- c("Mon", "Tue", "Wed", "Thu", "Fri")
+weekEnd <- c("Sat", "Sun")
+
+collapsedDay <- surveys |> 
+  mutate(day = fct_collapse(day_of_week, 
+                            "Weekday" = weekDays, "Weekend" = weekEnd)) |> 
+  filter(!is.na(day))
 ```
 
 -   date
@@ -176,12 +182,24 @@ qA <- inner_join(prof_info, prof_course)
 -   `full_join()`
 
 ```{r wd-5-full}
-# Preview Activity 4.3 (Question c)
-qC <- prof_course |> 
-  pivot_longer(cols = c(Stat_331, Stat_330, Stat_431),
-                            names_to = "course",
-                            values_to = "can_teach") |> 
-  full_join(course_info)
+# Challenge 4 (Part 1)
+# collapse the data set to only include observations with these regions and compute for means
+california <- avocado |>
+  filter(region %in% c("LosAngeles", "SanDiego", 
+                       "Sacramento", "SanFrancisco")) |> 
+  group_by(region) |>
+  summarise(avgPrice = mean(AveragePrice),
+            avgVolume = mean(`Total Volume`))
+
+# source: https://www.ramseysolutions.com/real-estate/cost-of-living-in-california
+housingPrices <- tibble(region = c("SanFrancisco", "LosAngeles", 
+                                   "SanDiego", "Sacramento"), 
+                       avgHouse = c(1297511, 816438, 800746, 440447),
+                       avgRent = c(4200, 2800, 2391, 1904))
+
+# combine the summaries to make a plot
+californiaData <- california |> 
+  full_join(housingPrices, by = "region")
 ```
 
 **WD-6: I can use filtering joins to filter rows from a dataframe.**
@@ -189,24 +207,20 @@ qC <- prof_course |>
 -   `semi_join()`
 
 ```{r wd-6-semi}
-# Lab 4 (Question 2.2)
-major_regions <- tibble(region = c("West", "Midwest", "Northeast", "South"))
+# Lab 9 (Spelling By State: Part 1)
+filters <- tibble(Name = c("Allan", "Alan", "Allen"))
 
-avocadoMajor <- avocado |> semi_join(major_regions, by = "region" )
+als <- aNames |>
+  semi_join(filters, by = "Name")
+
 ```
 
 -   `anti_join()`
 
 ```{r wd-6-anti}
-# Lab 4 (Question 2.2)
-state_minor <- tibble(region = c("California", "GreatLakes", "Midsouth",
-                                 "NorthernNewEngland", "Plains" ,"SouthCarolina", 
-                                 "SouthCentral", "Southeast", "TotalUS"))
-
-major_regions <- tibble(region = c("West", "Midwest", "Northeast", "South"))
-
-avocadoMetro <- avocado |> anti_join(state_minor, by = "region") |> 
-  anti_join(major_regions, by = "region")
+# Practice Activity 4 (Question 4)
+filtered_military <- military_clean |>
+  anti_join(cont_region, by = c("Country" = "Region"))
 ```
 
 **WD-7: I can pivot dataframes from long to wide and vise versa**
@@ -214,88 +228,69 @@ avocadoMetro <- avocado |> anti_join(state_minor, by = "region") |>
 -   `pivot_longer()`
 
 ```{r wd-7-long}
-# Lab 4 (Question 7)
-myPalette <- c("#80C9F9", "#196BA0", "#A5F980")
+# Lab 7 (Part 3.4)
+plusRescale <- fishData |> 
+  mutate(`Rescaled Length` = rescale_01(length)) |>
+  rename(Length = length)
 
-avocadoMetro |>
-  filter(region %in% c("LosAngeles", "SanDiego", 
-                       "Sacramento", "SanFrancisco")) |>
-  select(smallHaas:xlHaas, type, region) |> 
-  pivot_longer(smallHaas:xlHaas, names_to = "Size", values_to = "Quantity") |>
- 
-  ggplot(mapping = aes(x = region, 
-                       y = Quantity, 
-                       fill = Size)) + 
-  geom_col(position = "fill") +
-  labs(x = "Region of CA", 
-       y = "Proportion of Mean Avocados Sold") +
-  facet_grid(~type) + 
-  scale_x_discrete(guide = guide_axis(n.dodge = 2)) + 
-  scale_fill_manual(values = myPalette)
+plusRescale |> pivot_longer(cols = c(Length, `Rescaled Length`), 
+               names_to = "Type", 
+               values_to = "Length") |>
+  ggplot(mapping = aes(x = year, y = Length)) +
+  geom_smooth() +
+  facet_grid(Type ~ ., scales="free") +
+  labs(title = "Rescaled vs. Original Fish Length Values From 1989 to 2006") +
+  theme_linedraw() +
+  theme(axis.title.y = element_blank(),
+        axis.title.x = element_blank(), 
+        plot.title = element_text(face = "bold"))
 ```
 
 -   `pivot_wider()`
 
 ```{r wd-7-wide}
-# Lab 4 (Question 6)
-californiaAvocado <- avocadoMetro |> 
-  filter(region %in% c("LosAngeles", 
-                       "SanDiego",
-                       "Sacramento", 
-                       "SanFrancisco")) |> 
-  select(Date, type, region, AveragePrice) |>
-  pivot_wider(names_from = type, values_from = AveragePrice) |>
-  group_by(region) |> 
-  summarise(meanConventional = mean(conventional), meanOrganic = mean(organic))
+# Lab 9 (Part 1)
+allisonsSummary <- aNames %>%
+  filter(Name == "Allison") %>% 
+  group_by(State, Sex) %>%
+  summarise(Allisons = sum(Count)) %>%
+  pivot_wider(names_from = Sex, values_from = Allisons) %>%
+  replace_na(list(F = 0, M = 0))
 ```
 
 ## Reproducibility
 
 **R-1: I can create professional looking, reproducible analyses using RStudio projects, Quarto documents, and the here package.**
 
-I've done this in the following provided assignments: Lab 1 - Lab 5
+I've done this in the following provided assignments: Lab 1 - Lab 9
 
 **R-2: I can write well documented and tidy code.**
 
 -   Example 1
 
 ```{r r-2-1}
-# Lab 4 (Quetsion 2.2)
-avocado <- avocado |> rename(smallHaas = `4046`, largeHaas = `4225`, xlHaas = `4770`)
-
-# make a data set of unwanted regions
-state_minor <- tibble(region = c("California", "GreatLakes", "Midsouth",
-                                 "NorthernNewEngland", "Plains" ,"SouthCarolina", 
-                                 "SouthCentral", "Southeast", "TotalUS"))
-
-# make a data set of only the major regions
-major_regions <- tibble(region = c("West", "Midwest", "Northeast", "South"))
-
-# semi-join so that it contains only observations with the major regions
-avocadoMajor <- avocado |> semi_join(major_regions, by = "region" )
-
-# anti-join twice to remove the observations with matches from unwated and major regions
-avocadoMetro <- avocado |> anti_join(state_minor, by = "region") |> 
-  anti_join(major_regions, by = "region")
+# Lab 9 (Part 1, revised)
+allisonsSummary <- aNames %>%
+  filter(Name == "Allison") %>% 
+  group_by(State, Sex) %>%
+  summarise(Allisons = sum(Count)) %>%
+  pivot_wider(names_from = Sex, values_from = Allisons, values_fill = 0)
 ```
 
 -   Example 2
 
 ```{r r-2-2}
-# Lab 4 (Question 6)
-# means
-californiaAvocado <- avocadoMetro |> 
-  filter(region %in% c("LosAngeles", 
-                       "SanDiego",
-                       "Sacramento", 
-                       "SanFrancisco")) |> 
-  select(Date, type, region, AveragePrice) |>
-  pivot_wider(names_from = type, values_from = AveragePrice) |>
-  group_by(region) |> 
-  summarise(meanConventional = mean(conventional), meanOrganic = mean(organic))
-# difference in means
-summaryCal <- californiaAvocado |> 
-  summarise(region = region, meanDiff = abs(meanConventional - meanOrganic))
+# Lab 9 (Part 3)
+allison_Years %>% 
+  ggplot(mapping = aes(x = Year, y = Allisons)) +
+  geom_line() + 
+  labs(title = "Number Of Allisons Throughout 1997 to 2014") +
+  theme_linedraw() +
+  theme(axis.title.y = element_blank(),
+        axis.title.x = element_blank(), 
+        plot.title = element_text(face = "bold"), 
+        panel.background = element_rect(fill = "lightgrey"))
+
 ```
 
 **R-3: I can write robust programs that are resistant to changes in inputs.**
@@ -303,13 +298,30 @@ summaryCal <- californiaAvocado |>
 -   Example 1
 
 ```{r r-3-1}
-
+# Lab 7 (Question 3.2)
+rescale_01 <- function(x) {
+  
+  stopifnot(is.numeric(x), length(x) > 1)
+  
+  min <- min(x, na.rm = TRUE)
+  max <- max(x, na.rm = TRUE)
+  
+  new <- (x - min) / 
+         (max - min)
+  
+  return(new)
+}
 ```
 
 -   Example 2
 
 ```{r r-3-2}
-
+# Lab 9 (Part 1, revised)
+allisonsSummary <- aNames %>%
+  filter(Name == "Allison") %>% 
+  group_by(State, Sex) %>%
+  summarise(Allisons = sum(Count)) %>%
+  pivot_wider(names_from = Sex, values_from = Allisons, values_fill = 0)
 ```
 
 ## Data Visualization & Summarization
@@ -331,24 +343,22 @@ ggplot(data = surveys,
 -   numeric variables and categorical variables
 
 ```{r dvs-2-num-cat}
-# Lab 4 (Question 7)
-myPalette <- c("#80C9F9", "#196BA0", "#A5F980")
+# Lab 7 (Part 3.4)
+plusRescale <- fishData |> 
+  mutate(`Rescaled Length` = rescale_01(length)) |>
+  rename(Length = length)
 
-avocadoMetro |>
-  filter(region %in% c("LosAngeles", "SanDiego", 
-                       "Sacramento", "SanFrancisco")) |>
-  select(smallHaas:xlHaas, type, region) |> 
-  pivot_longer(smallHaas:xlHaas, names_to = "Size", values_to = "Quantity") |>
- 
-  ggplot(mapping = aes(x = region, 
-                       y = Quantity, 
-                       fill = Size)) + 
-  geom_col(position = "fill") +
-  labs(x = "Region of CA", 
-       y = "Proportion of Mean Avocados Sold") +
-  facet_grid(~type) + 
-  scale_x_discrete(guide = guide_axis(n.dodge = 2)) + 
-  scale_fill_manual(values = myPalette)
+plusRescale |> pivot_longer(cols = c(Length, `Rescaled Length`), 
+               names_to = "Type", 
+               values_to = "Length") |>
+  ggplot(mapping = aes(x = year, y = Length)) +
+  geom_smooth() +
+  facet_grid(Type ~ ., scales="free") +
+  labs(title = "Rescaled vs. Original Fish Length Values From 1989 to 2006") +
+  theme_linedraw() +
+  theme(axis.title.y = element_blank(),
+        axis.title.x = element_blank(), 
+        plot.title = element_text(face = "bold"))
 ```
 
 -   categorical variables
@@ -411,19 +421,24 @@ ggplot(data = surveys,
 -   Example 2
 
 ```{r dvs-2-2}
-# Lab 5 (Question 2.4)
-ggplot(data = timeSummary, 
-       mapping = aes(x = year,
-                     y = meanWeight,
-                     color = fct_reorder(genus, meanWeight, .desc = TRUE))) + 
-  geom_line() + 
-  labs(x = "Years",
-       title = "Mean Weight (g) of Different Rodent Genuses From 1979 - 2002", 
-       color = "Rodent Genus") + 
-  theme_light() + 
+# Challenge 07 (Part 3)
+newData |> mutate(species = case_when(species == "RBT" ~ "Rainbow",
+                                      species == "WCT" ~ "Westslope Cutthroat",
+                                      TRUE ~ species),
+                  species = str_c(species, " ", "Trout" )) |>
+  group_by(year, species, section) |>
+  summarize(meanCondition = mean(condition, na.rm = TRUE)) |>
+  ggplot(mapping = aes(x = year, y = meanCondition, color = section)) +
+  geom_line() +
+  facet_wrap(~species) +
+  theme_linedraw() +
+  labs(title = "The Average Condition Of Trout Species in Different Sections From 1989 to 2006",
+       x = "Years",
+      color = "Section") +
   theme(axis.title.y = element_blank(),
-        plot.title = element_text(face = "bold"),
-        axis.text = element_text(size = 7)) 
+        plot.title = element_text(face = "bold",
+                                  size = 12),
+        axis.text = element_text(size = 8)) 
 ```
 
 **DVS-3: I show creativity in my visualizations**
@@ -431,53 +446,53 @@ ggplot(data = timeSummary,
 -   Example 1
 
 ```{r dvs-3-1}
-# Lab 4 Revised (Question 5)
-metroSummary <- avocadoMetro |> select(`Total Volume`, region) |> 
-  group_by(region) |> summarise(sumTotalVol = sum(`Total Volume`),
-                                meanTotalVol = mean(`Total Volume`)) |> 
-  slice_max(meanTotalVol, n = 5)
+# Lab 7 (Question 3.4)
+plusRescale <- fishData |> 
+  mutate(`Rescaled Length` = rescale_01(length)) |>
+  rename(Length = length)
 
-top5 <- avocadoMetro |> semi_join(metroSummary, by = "region")
-
-# changing the limits source: https://ggplot2.tidyverse.org/reference/lims.html
-# color palette: https://statisticsglobe.com/scale-colour-fill-brewer-rcolorbrewer-package-r
-ggplot(data = top5, mapping = aes(y = region, x = `Total Volume`, fill = region)) +
-  geom_boxplot(size = 0.3) + 
-  labs(x = "Total Volume Sold/Week", 
-       y = "US City", 
-       title = "Total Volume of Avocados Sold Across Top 5 Selling Cities in the USA",
-       fill = "City") + 
-  theme_light() +
-  theme(plot.title = element_text(face = "bold", 
-                                  size = 13),
-        axis.title = element_text(size = 10, 
-                                  face = "bold"),
-        axis.text = element_text(size = 8), 
-        legend.position = "none") + 
-  scale_fill_brewer(palette = "RdYlBu")
+plusRescale |> 
+  pivot_longer(cols = c(Length, `Rescaled Length`), 
+               names_to = "Type", 
+               values_to = "Length") |>
+  ggplot(mapping = aes(x = year, y = Length)) +
+  geom_smooth() +
+  facet_grid(Type ~ ., scales="free") +
+  labs(title = "Rescaled vs. Original Fish Length Values From 1989 to 2006") +
+  theme_linedraw() +
+  theme(axis.title.y = element_blank(),
+        axis.title.x = element_blank(), 
+        plot.title = element_text(face = "bold"))
 ```
 
 -   Example 2
 
 ```{r dvs-3-2}
-# Lab 4 (Question 7)
-myPalette <- c("#80C9F9", "#196BA0", "#A5F980")
-
-avocadoMetro |>
-  filter(region %in% c("LosAngeles", "SanDiego", 
-                       "Sacramento", "SanFrancisco")) |>
-  select(smallHaas:xlHaas, type, region) |> 
-  pivot_longer(smallHaas:xlHaas, names_to = "Size", values_to = "Quantity") |>
- 
-  ggplot(mapping = aes(x = region, 
-                       y = Quantity, 
-                       fill = Size)) + 
-  geom_col(position = "fill") +
-  labs(x = "Region of CA", 
-       y = "Proportion of Mean Avocados Sold") +
-  facet_grid(~type) + 
-  scale_x_discrete(guide = guide_axis(n.dodge = 2)) + 
-  scale_fill_manual(values = myPalette)
+# Challenge 2 (Part 2)
+ggplot(data = surveys,
+  mapping = aes(x = species, 
+                y = weight,
+                color = genus)) + 
+  geom_jitter(size = 0.5, 
+              alpha = 0.5) + 
+  geom_boxplot(alpha = 0.1, 
+               outlier.shape = NA)  +
+  labs(x = "Penguin Weight (g)", 
+       y = "Penguin Species", 
+       title = "The Weight Distribution of Penguins Across Different Species", 
+       color = "Genus") +
+  scale_x_discrete(guide = guide_axis(n.dodge = 2)) +
+  # RColorBrewer color scale
+  scale_color_brewer(palette = "Set1") +
+  theme(plot.title = element_text(face = "bold", 
+                                  size = 12),
+        axis.title = element_text(size = 8, 
+                                  face = "bold"),
+        axis.text = element_text(size = 6),
+        legend.title = element_text(size = 10, 
+                                    face = "bold"),
+           legend.text = element_text(size = 7),
+        legend.key.size = unit(.3, "cm"))
 ```
 
 **DVS-4: I can calculate numerical summaries of variables.**
@@ -485,38 +500,31 @@ avocadoMetro |>
 -   Example 1
 
 ```{r dvs-4-1}
-{r dvs-3-2}
-# Lab 4 (Question 6)
-# means
-californiaAvocado <- avocadoMetro |> 
-  filter(region %in% c("LosAngeles", 
-                       "SanDiego",
-                       "Sacramento", 
-                       "SanFrancisco")) |> 
-  select(Date, type, region, AveragePrice) |>
-  pivot_wider(names_from = type, values_from = AveragePrice) |>
-  group_by(region) |> 
-  summarise(meanConventional = mean(conventional), meanOrganic = mean(organic))
-# difference in means
-summaryCal <- californiaAvocado |> 
-  summarise(region = region, meanDiff = abs(meanConventional - meanOrganic))
-
+# Lab 9 (Part 1.3)
+allison_Years <- allison_f %>% 
+  group_by(Year) %>%
+  summarise(Allisons = sum(Count))
 ```
 
 -   Example 2
 
 ```{r dvs-4-2}
-# Challenge 3 (Question 5.1.1 Male vs. Female)
-summary1 <- hiphop_coll |> group_by(sex) |> 
-  summarize(across(intl:unclassifiable, mean, na.rm = TRUE))
+# Challenge 3 (Question 5.1.1 Male vs. Female, Revised to use latest across)
+summary1 <- hiphop_coll |> 
+  group_by(sex) |> 
+  summarize(across(.cols = intl:unclassifiable, 
+                   .fns = ~ mean(.), 
+                   na.rm = TRUE))
 
 differences1 <- summary1 |>
-  summarize(across(intl:unclassifiable, diff))
+  summarize(across(.cols = intl:unclassifiable,
+                   .fns = ~ diff(.)))
 
-absdiff1 <- differences1 |> summarize(across(intl:unclassifiable, abs))
+absdiff1 <- differences1 |> 
+  summarize(across(.cols = intl:unclassifiable, 
+                   .fns = ~ abs(.)))
 
 which.max(absdiff1)
-
 ```
 
 **DVS-5: I can find summaries of variables across multiple groups.**
@@ -524,33 +532,28 @@ which.max(absdiff1)
 -   Example 1
 
 ```{r dvs-5-1}
-# Lab 4 (Question 6)
-# means
-californiaAvocado <- avocadoMetro |> 
-  filter(region %in% c("LosAngeles", 
-                       "SanDiego",
-                       "Sacramento", 
-                       "SanFrancisco")) |> 
-  select(Date, type, region, AveragePrice) |>
-  pivot_wider(names_from = type, values_from = AveragePrice) |>
-  group_by(region) |> 
-  summarise(meanConventional = mean(conventional), meanOrganic = mean(organic))
-# difference in means
-summaryCal <- californiaAvocado |> 
-  summarise(region = region, meanDiff = abs(meanConventional - meanOrganic))
+# Lab 7 (Part 2.1)
+fishData |> summarise(across(.cols = everything(),
+                             .fns = ~ sum(is.na(.))))
 ```
 
 -   Example 2
 
 ```{r dvs-5-2}
-# Challenge 3 (Question 5.1.1 Male vs. Female)
-summary1 <- hiphop_coll |> group_by(sex) |> 
-  summarize(across(intl:unclassifiable, mean, na.rm = TRUE))
+# Challenge 3 (Question 5.1.1 Male vs. Female, Revised to use latest across)
+summary1 <- hiphop_coll |> 
+  group_by(sex) |> 
+  summarize(across(.cols = intl:unclassifiable, 
+                   .fns = ~ mean(.), 
+                   na.rm = TRUE))
 
 differences1 <- summary1 |>
-  summarize(across(intl:unclassifiable, diff))
+  summarize(across(.cols = intl:unclassifiable,
+                   .fns = ~ diff(.)))
 
-absdiff1 <- differences1 |> summarize(across(intl:unclassifiable, abs))
+absdiff1 <- differences1 |> 
+  summarize(across(.cols = intl:unclassifiable, 
+                   .fns = ~ abs(.)))
 
 which.max(absdiff1)
 
@@ -561,33 +564,35 @@ which.max(absdiff1)
 -   Example 1
 
 ```{r dvs-6-1}
-# Lab 4 (Question 6)
-# means
-californiaAvocado <- avocadoMetro |> 
-  filter(region %in% c("LosAngeles", 
-                       "SanDiego",
-                       "Sacramento", 
-                       "SanFrancisco")) |> 
-  select(Date, type, region, AveragePrice) |>
-  pivot_wider(names_from = type, values_from = AveragePrice) |>
-  group_by(region) |> 
-  summarise(meanConventional = mean(conventional), meanOrganic = mean(organic))
-# difference in means
-summaryCal <- californiaAvocado |> 
-  summarise(region = region, meanDiff = abs(meanConventional - meanOrganic))
+# Challenge 9 (Part 2)
+# https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html#Table_Footnote: boostrap options
+al_summary %>%
+  knitr::kable(format = "html", 
+               align = "crrr",
+              caption = "Allans, Alans, and Allens Born In CA & PA") %>%
+  kable_styling(full_width = T, 
+                font_size = 12, 
+                position = "center",
+                bootstrap_options = "striped")
 ```
 
 -   Example 2
 
 ```{r dvs-6-2}
-# Challenge 3 (Question 5.1.1 Male vs. Female)
-summary1 <- hiphop_coll |> group_by(sex) |> 
-  summarize(across(intl:unclassifiable, mean, na.rm = TRUE))
+# Challenge 3 (Question 5.1.1 Male vs. Female, Revised to use latest across)
+summary1 <- hiphop_coll |> 
+  group_by(sex) |> 
+  summarize(across(.cols = intl:unclassifiable, 
+                   .fns = ~ mean(.), 
+                   na.rm = TRUE))
 
 differences1 <- summary1 |>
-  summarize(across(intl:unclassifiable, diff))
+  summarize(across(.cols = intl:unclassifiable,
+                   .fns = ~ diff(.)))
 
-absdiff1 <- differences1 |> summarize(across(intl:unclassifiable, abs))
+absdiff1 <- differences1 |> 
+  summarize(across(.cols = intl:unclassifiable, 
+                   .fns = ~ abs(.)))
 
 which.max(absdiff1)
 ```
@@ -597,26 +602,30 @@ which.max(absdiff1)
 -   Example 1
 
 ```{r dvs-7-1}
-# Challenge 3 (Question 5.1.1 Male vs. Female)
-summary1 <- hiphop_coll |> group_by(sex) |> 
-  summarize(across(intl:unclassifiable, mean, na.rm = TRUE))
-
-differences1 <- summary1 |>
-  summarize(across(intl:unclassifiable, diff))
-
-absdiff1 <- differences1 |> summarize(across(intl:unclassifiable, abs))
-
-which.max(absdiff1)
+# Challenge 9 (Part 1.2.3 Spelling By State)
+finalSummary %>%
+  gt() %>%
+  fmt_percent(columns = 2:3, decimals = 2) %>%
+  cols_label(Allan = "Allan %",
+             Alan = "Alan %",
+             Allen = "Allen %",
+             Total = "Total Number Of Babies Born") %>%
+  cols_align(align = "center", columns = everything()) %>%
+  tab_header(title = md("**Number Of Babies Born in CA & PA**"))
 ```
 
 -   Example 2
 
 ```{r dvs-7-2}
-# Lab 4 (Question 5)
-metroSummary <- avocadoMetro |> select(`Total Volume`, region) |> 
-  group_by(region) |> summarise(sumTotalVol = sum(`Total Volume`),
-                                meanTotalVol = mean(`Total Volume`)) |> 
-  slice_max(meanTotalVol, n = 5)
+# Challenge 9 (Part 2)
+al_summary %>%
+  knitr::kable(format = "html", 
+               align = "crrr",
+              caption = "Allans, Alans, and Allens Born In CA & PA") %>%
+  kable_styling(full_width = T, 
+                font_size = 12, 
+                position = "center",
+                bootstrap_options = "striped")
 ```
 
 ## Program Efficiency
@@ -626,38 +635,34 @@ metroSummary <- avocadoMetro |> select(`Total Volume`, region) |>
 -   using a single function call
 
 ```{r pe-1-one-call}
-# Lab 4 (Question 6)
-# Using %in% to filter
-californiaAvocado <- avocadoMetro |> 
-  filter(region %in% c("LosAngeles", 
-                       "SanDiego",
-                       "Sacramento", 
-                       "SanFrancisco")) |> 
-  select(Date, type, region, AveragePrice) |>
-  pivot_wider(names_from = type, values_from = AveragePrice) |>
-  group_by(region) |> 
-  summarise(meanConventional = mean(conventional), meanOrganic = mean(organic))
+# Lab 9 (Part 1, revised)
+allisonsSummary <- aNames %>%
+  filter(Name == "Allison") %>% 
+  group_by(State, Sex) %>%
+  summarise(Allisons = sum(Count)) %>%
+  pivot_wider(names_from = Sex, values_from = Allisons, values_fill = 0)
 ```
 
 -   `across()`
 
 ```{r pe-1-across}
-# Challenge 3 (Question 5.1.1 Male vs. Female)
-summary1 <- hiphop_coll |> group_by(sex) |> 
-  summarize(across(intl:unclassifiable, mean, na.rm = TRUE))
-
-differences1 <- summary1 |>
-  summarize(across(intl:unclassifiable, diff))
-
-absdiff1 <- differences1 |> summarize(across(intl:unclassifiable, abs))
-
-which.max(absdiff1)
+# Lab 7 (Part 2.1)
+fishData |> 
+  summarise(across(.cols = everything(),
+                             .fns = ~ sum(is.na(.))))
 ```
 
 -   `map()` functions
 
 ```{r pe-1-map-1}
-
+# Lab 8 (Full Phrase Datset (Before Lab 8 Title))
+xmas2 <- xmas |>
+  mutate(Full.Phrase = pmap_chr(.l = list(Day,
+                                          Gift.Item,
+                                          Verb,
+                                          Adjective,
+                                          Location), 
+                                .f = make_phrase))
 ```
 
 **PE-2: I can write functions to reduce repetition in my code.**
@@ -665,31 +670,88 @@ which.max(absdiff1)
 -   Example 1
 
 ```{r pe2-1}
-
+# Lab 7 (Question 3.2)
+rescale_01 <- function(x) {
+  
+  stopifnot(is.numeric(x), length(x) > 1)
+  
+  min <- min(x, na.rm = TRUE)
+  max <- max(x, na.rm = TRUE)
+  
+  new <- (x - min) / 
+         (max - min)
+  
+  return(new)
+}
 ```
 
 -   Example 2
 
 ```{r pe2-2}
+# Lab 8 (Question 1)
+sing_day <- function(dataset, line, phrase_col) {
+  
+  # Step 1: Setup the intro line
+  # Hint: You need to convert a number (e.g., 1) to a word (e.g., first)
+  num_word <-  ordinal(line)
 
+  intro <- glue("On the {num_word} day of Christmas, my true love sent to me:")
+  
+  # Step 2: Sing the gift phrases
+  phrases <- dataset |>
+      pull( {{phrase_col}} )
+  
+  lineGift <- str_flatten(phrases[ {{line}}:1 ], "\n")
+  
+  song <- glue("{intro} \n{lineGift}")
+  
+  return(song)
+  
+}
 ```
 
-**PE-3:I can use iteration to reduce repetition in my code.**
+**PE-3: I can use iteration to reduce repetition in my code.**
 
 -   `across()`
 
 ```{r pe-3-across}
-
+rescale_column <- function(df, var) {
+ 
+  stopifnot(is.data.frame(df))
+  
+  newDF <- df |> mutate(across(.col = {{var}}, 
+                               .fns = ~ rescale_01(.)))
+  
+  return(newDF)
+}
 ```
 
 -   `map()` functions (Provide 2 Examples)
 
 ```{r pe-3-map-1}
-
+# Lab 8 (Full Phrase Datset (Before Lab 8 Title))
+xmas2 <- xmas |>
+  mutate(Full.Phrase = pmap_chr(.l = list(Day,
+                                          Gift.Item,
+                                          Verb,
+                                          Adjective,
+                                          Location), 
+                                .f = make_phrase))
 ```
 
 ```{r pe-3-map-2}
-
+# Lab 8 (Part 2)
+full_song <- function(dataset, line, phrase_col) {
+  
+  chunks <- map_chr(.x = 1:line,
+                    .f = ~ sing_day(dataset, 
+                                    .x, 
+                                    {{phrase_col}}))
+  combined <- glue("{chunks}")
+  
+  return(combined)
+  
+}
 ```
 
 **PE-4: I can use modern tools when carrying out my analysis.**
@@ -697,13 +759,36 @@ which.max(absdiff1)
 -   Example 1
 
 ```{r pe-4-1}
+# Lab 7 (Question 3.4)
+plusRescale <- fishData |> 
+  mutate(`Rescaled Length` = rescale_01(length)) |>
+  rename(Length = length)
 
+plusRescale |> 
+  pivot_longer(cols = c(Length, `Rescaled Length`), 
+               names_to = "Type", 
+               values_to = "Length") |>
+  ggplot(mapping = aes(x = year, y = Length)) +
+  geom_smooth() +
+  facet_grid(Type ~ ., scales="free") +
+  labs(title = "Rescaled vs. Original Fish Length Values From 1989 to 2006") +
+  theme_linedraw() +
+  theme(axis.title.y = element_blank(),
+        axis.title.x = element_blank(), 
+        plot.title = element_text(face = "bold"))
 ```
 
 -   Example 2
 
 ```{r pe-4-2}
+# Lab 3 (Question 13)
+summary3 <- hiphop_clean |> filter(sex == "Male", 
+                       ethnic_2 == "white", age > 30) |>
+  group_by(word) |>
+  summarise(meanFamiliarity = mean(familiarity))
 
+summary3 |> slice_min(meanFamiliarity)
+summary3 |> slice_max(meanFamiliarity)
 ```
 
 ## Data Simulation & Modeling
@@ -713,13 +798,36 @@ which.max(absdiff1)
 -   Example 1
 
 ```{r dsm-1-1}
-
+# Practice Activity 8 (Part 2.1)
+q1 <- qunif(.95, 1.5, 3.5)
+q2 <- qnorm(.10, 4.6, 0.8)
+q3 <- 1 - pnorm(5, 4.6, 0.8)
+q3.2 <- 1 - pnorm(5, 4.6, 0.8)
+q4 <- 1 - pchisq(5, 4)
+q5 <- rnorm(100, 4.6, 0.8)
 ```
 
 -   Example 2
 
 ```{r dsm-1-2}
+# Practice Activity 8 (Part 2.2)
+set.seed(1957)
 
+music_man <- function(n_tromb, n_cor, n_reed){
+  
+  trombones <- rnorm(n_tromb, 4.6, .8)
+  cornets <- runif(n_cor, 1.5, 3.5)
+  reeds <- rchisq(n_reed, 4)
+  
+  total <- sum(trombones) + sum(cornets) + sum(reeds)  
+  return(total)
+  
+}
+
+my_weights <- map_dbl(.x = 1:1000, 
+                      .f = ~ music_man(n_tromb = 76, 
+                                       n_cor = 110,
+                                       n_reed = 1035) ) 
 ```
 
 **DSM-2: I can fit a linear regression and extract necessary summary measures.**
@@ -727,13 +835,26 @@ which.max(absdiff1)
 -   Example 1
 
 ```{r dsm-2-1}
-
+# Lab 9 (part 2.2)
+broom::tidy(allison_lm)
+# Equation = -101.52(Year) + 209689.76
 ```
 
 -   Example 2
 
 ```{r dsm-2-2}
-
+# Lab 9 (part 2.3)
+allison_lm %>% 
+  broom::augment() %>% 
+  ggplot(mapping = aes(y = .resid, x = .fitted)) +
+  geom_point() + 
+  labs(title = "Residual Plot: Number of Babies Named Allison From 1997 to 2014",
+       y = "Residuals",
+       x = "Fitted") +
+  theme_linedraw() +
+  theme(plot.title = element_text(face = "bold", 
+                                  size = 13), 
+        panel.background = element_rect(fill = "lightgrey"))
 ```
 
 ## Revising My Thinking
@@ -751,3 +872,7 @@ I believe to be highly proficient in peer support and collaboration. In the week
 ![](images/Screen%20Shot%202023-02-19%20at%204.56.59%20PM.png){fig-align="center" width="260"}
 
 For Lab 5, I was given the same feedback with piping my ggplot to avoid creating unnecessary data sets. In this peer review, I made sure to remember the feedback, learn from it, and use it to help my peers improve their output.
+
+## **Growth as a data scientist**: 
+
+Prior to enrolling in this class, my experience with data analysis through R was limited to working with distributions and simulations. However, after completing this course, I am proud to say that I have acquired a new set of skills, knowledge and great connections. Not only did I learn a lot, but the expertise acquired in this class are also being applied to an extra-curricular project that I am currently working on. Beyond that, I believe that attention to detail with the conciseness of plot and axis labels, as well as cleanliness of the code are equally as important as the technical aspects of this course. Early on in the quarter, I struggled with paying attention to small details - axis labels, plot titles, new lines, quarto options. But as we progressed later on, I was able develop my skills in the said areas. I believe to have shown improvement in these aspects through the later labs and challenges (7, 8, 9), where I made sure to build graphs with no redundant plot labels and are clear and easy for the readers to take in. In challenge 7, there were abbreviations of some of the trout species which may possibly interfere with the reader's understanding. Because of that, I modified the display name for each species so that my readers are able to understand what they are looking at. I also use Quarto options with table of contents just to make it easier for my peers and instructor to navigate through the document. In these labs, I also believe to have demonstrated improvement on cleanliness and spacing. As a data scientist who will be sharing and working on the same code with peers, and reporting summaries in the future, being able to produce concise and neat results are important. In my extra-curricular research project, I am in charge of cleaning, transforming, and analyzing survey data collected from approximately 500 college students with over 100 columns to start with. Apart from doing the code alone, I also had to demonstrate my code to my research advisor, and build visualizations for my research leader and group. As an aspiring data scientist, I understand that apart from coding, a big part of my job will also be conveying, which is why it is important to make sure that the other side (audience, readers, & peers) will also be able to understand reports.
