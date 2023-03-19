@@ -3,3 +3,15 @@ title: "Lightening Round Essays"
 format: html
 editor: visual
 ---
+
+# **Lightning Round:**
+
+-   If Daltz doesn't earn an A, then nobody should, because I was able to observe his proficiency in skills and determination to learn during group practice activities. He is also always willing to help and goes out of his way to explain a concept that you do not understand.
+
+-   I had a little bit of a hard time understanding factors and how they worked in the beginning. It was difficult for me to understand the examples given in the reading at first, and was also bombarded with other classes at the time which made it more difficult for me to grasp.
+
+-   The easiest part of the class for me is learning about dplyr using it with functions. I was quickly able to adapt to the process since I have experience with SAS. The formatting is different but the functions are somewhat similar.
+
+-   I am oddly very amused by pivots and what they do. When I was studying SAS, we had a similar function called PROC Transpose, which was very hard for me to wrap my head around. The way of calling the function was confusing. However, I find it interesting that the pivots came easy to me.
+
+-   As much as possible, come to class with at least a little bit of knowledge on the new topic. This will help you stay on top, especially with your lab assignments. You do not want to be learning the material the day you do your lab as it will eat up your time!

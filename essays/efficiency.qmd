@@ -3,3 +3,7 @@ title: "The Power of Efficiency"
 format: html
 editor: visual
 ---
+
+# **The power of efficiency:**
+
+The dictionary formally defines the word efficiency as how well a process or machine uses energy to do useful work. As a data scientist, I see efficiency as the process of being able to perform certain tasks and operations in a timely, concise, and effective manner. This does not only save time and reduce errors, but practicing efficiency can also make the code more scalable and maintanable. Performing the same function repeatedly on multiple columns can be time-consuming and can lead to redundancy. One way to avoid this is to use a more versatile function or helper function, or even build a custom algorithm that can handle the handling of multiple columns through a single call. There were many instances where it saved me time and made my code more concise. For example, instead of listing multiple columns one by one, I used the 'across' helper function to select them all at once. In lab 9, the 'values_fill' option in 'pivot_wider()' function saved me from writing additional lines of code. And in lab 8, using the 'map' functions allowed me to avoid calling the same function 12 times. Building functions for efficiency, especially with loops seem to be complicated in the beginning but it definitely something worth getting used to.
