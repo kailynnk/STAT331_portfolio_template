@@ -43,8 +43,8 @@ military <- read_xlsx(here::here("data",
 -   `txt`
 
 ```{r wd-1-txt}
-# Preview Activity 2.2
-read_tsv("ages_tab.txt")
+# Practice Activity 5.2
+message <- read_csv(here::here("data", "scrambled_message.txt"))
 ```
 
 **WD-2: I can select necessary columns from a data set.**
@@ -71,22 +71,22 @@ summary1 <- hiphop_clean |> filter(age < 20) |>
 -   character -- specifically a string
 
 ```{r wd-3-string}
-# Lab 9 (Part 2)
-allison_f <- aNames  %>% filter(Name == "Allison",
-                                Sex == "F")  
+# Practice Activity 5.2 (Question 3)
+message <- message %>%
+  filter(!str_detect(Word, "ugh+[:punct:]"))
 ```
 
 -   factor
 
 ```{r wd-3-factor}
-# Lab 5 (Question 3.3)
-weekDays <- c("Mon", "Tue", "Wed", "Thu", "Fri")
-weekEnd <- c("Sat", "Sun")
+# Lab 3 (Question 12)
+summary2 <- hiphop_clean |> filter(sex == "Female", 
+                       ethnic_2 == "non-white") |> 
+  group_by(word) |>
+  summarise(meanFamiliarity = mean(familiarity))
 
-collapsedDay <- surveys |> 
-  mutate(day = fct_collapse(day_of_week, 
-                            "Weekday" = weekDays, "Weekend" = weekEnd)) |> 
-  filter(!is.na(day))
+summary2 |> slice_min(meanFamiliarity)
+summary2 |> slice_max(meanFamiliarity)
 ```
 
 -   date
@@ -118,7 +118,7 @@ suspects_ |>
 -   character -- specifically a string
 
 ```{r wd-4-string}
-# Lab 8 (PaRt 1)
+# Lab 8 (Part 1)
 pluralize_gift <- function(gift) {
 
   gift <- gift |>
@@ -556,7 +556,6 @@ absdiff1 <- differences1 |>
                    .fns = ~ abs(.)))
 
 which.max(absdiff1)
-
 ```
 
 **DVS-6: I can create tables which make my summaries clear to the reader.**
@@ -715,6 +714,7 @@ sing_day <- function(dataset, line, phrase_col) {
 -   `across()`
 
 ```{r pe-3-across}
+# Lab 7 (Part 3.5)
 rescale_column <- function(df, var) {
  
   stopifnot(is.data.frame(df))
@@ -859,20 +859,16 @@ allison_lm %>%
 
 ## Revising My Thinking
 
-Despite showing proficiency in most of the learning targets, I still face some issues such as lacking plot labels and code repetition. This can be seen in my earlier labs where I failed to put proper axis labels. There was also a lot of repeating and inefficient code in my initial Lab 3 submission. Because of proper feedback, I was able to revise my thinking and apply the feed backs I received in my future lab assignments. I use my Lab 5 Time Plot as a reference to clear and readable plots, and believe that to be my cleanest and favorite one. Additionally, after receiving the efficiency feedback in Lab 3, I began to take it into more consideration. When summarizing data across columns greater than 2, I utilize the `across()` helper to avoid repetition (this was done through a Challenge revision). I have also continued to show improvement and learning in this aspect through my Lab 4 when I used `%in%` when filtering multiple categories in a specific column. Overall, I believe to have demonstrated a proficiency in revised thinking throughout the entirety of the course. I take each feedback from my professor and peers into account in order to avoid making the same mistakes in the future. I have also always made sure to submit a revision each week despite having only minor issues with my code.
+Despite showing proficiency in most of the learning targets, I was bad about a few things in the beginning. This can be seen in my earlier labs (lab 1 and lab 3) where i had insufficient and incorrect plot labels. There was also a lot of repeating and inefficient code in my initial Lab 3 submission. And I do acknowledge my stubborness when it came to adding a new line after every pipe. However, after continuous feed back from my peers and instructor, i was able to revise my thinking and apply feed back i my future assignments. I use my Lab 5 Time Plot as a reference to clear and readable plots, and believe that to be my cleanest and favorite one. I then improved my plot clarity even more, when I created plots in Lab 7 and Challenge 7. I have also began to incorporate the across function in almost all my labs after receiving feedback regarding efficiency. I have also learned another efficiecy technique after creating functions and loops in lab 7 and 8. I also completely followed adding of the new line after every pipe in lab 9. It was hard for me to follow at first, as the empty an long trailing white space bothered me. However, I now do acknowledge and appreciate adding a new line after every pipe. I understand how this simple instruction can make a difference, especially after several peer reviews. Overall, I believe to have demonstrated a proficiency in revised thinking throughout the entirety of the course. I take each feedback from my professor and peers into account in order to avoid making the same mistakes in the future. I also always made sure to submit a revision when I cam despite having only minor issues with my code.
 
 ## Extending My Thinking
 
-I believe to have demonstrated extended thinking in most of the activities as I usually refer to external resources. A lot of my extended thinking can be demonstrated by my plots and visuals, especially with its details and aesthetics. A lot of my data visualization examples in this portfolio show that I try to make my plot as aesthetically pleasing by using different plot themes, changing plot label fonts and sizes, and using a color palette, `facet_grid()` function, and an `x_scale_discrete` function. Throughout the course, I have also made use of different Quarto options to spice up the appearance of my HTML file. This is especially demonstrated in my Lab 4 where I incorporated a table of contents and a different Quarto theme.
+I believe to have demonstrated extended thinking in most of the activities as I usually refer to external resources. A lot of my extended thinking can be demonstrated by my plots and visuals, especially with its details and aesthetics. A lot of my data visualization examples in this portfolio show that I try to make my plot as aesthetically pleasing by using different plot themes, changing plot label fonts and sizes, and using a color palette, `facet_grid()` function, and an `x_scale_discrete` function. I believe Challenge 7 to support this my extended thinking as I use two different sources as a basis for trout measurements. Throughout the course, I have also made use of different Quarto options to spice up the appearance of my HTML file. This is especially demonstrated in my later labs where I incorporated a table of contents and a different Quarto theme. I have used these applications until the last lab.
 
 ## Peer Support & Collaboration
 
-I believe to be highly proficient in peer support and collaboration. In the weeks of doing practice activities with my group, I have been the facilitator, team captain, recorder, and report editor. I believe to be successful in my role in all the weeks as my group and I have been successful in the task, and have established a good relationship inside and outside of the classroom. In terms of peer support, I try to respond to queries on discord when I can, but I mostly help my peers with minor questions regarding labs. I believe to have demonstrated this especially in the data cleansing portion of Lab 4. I used my knowledge gained after attending office hours to help my peers and explain to them the reason behind utilizing `semi-join()` and `anti-join()` instead of using the filter function to cleanse data. As for peer reviews, I have been specific with my comments, and also use feedback given to me to asses my peer's task. I try to avoid giving surface level feedback, but I also mention the minor issues for better learning. An example of my favorite feedback is attached in the image below:
+I believe to be highly proficient in peer support and collaboration. In the weeks of doing practice activities with my group, I have been the facilitator, team captain, recorder, and report editor. I believe to be successful in my role in all the weeks as my group and I have been successful in the task, and have established a good relationship inside and outside of the classroom. In terms of peer support, I try to respond to queries on discord when I can, but I mostly help my peers with minor questions regarding labs. I believe to have demonstrated this especially in the data cleansing portion of Lab 4. I used my knowledge gained after attending office hours to help my peers and explain to them the reason behind utilizing `semi-join()` and `anti-join()` instead of using the filter function to cleanse data. When working on labs, I always try to clarify concepts to help my peers understand the process of a certain function. I also share my resources. As for peer reviews, I have been specific with my comments, and also use feedback given to me to asses my peer's task. I try to avoid giving surface level feedback, but I also mention the minor issues for better learning. An example of my favorite feedback is attached in the image below:
 
 ![](images/Screen%20Shot%202023-02-19%20at%204.56.59%20PM.png){fig-align="center" width="260"}
 
-For Lab 5, I was given the same feedback with piping my ggplot to avoid creating unnecessary data sets. In this peer review, I made sure to remember the feedback, learn from it, and use it to help my peers improve their output.
-
-## **Growth as a data scientist**: 
-
-Prior to enrolling in this class, my experience with data analysis through R was limited to working with distributions and simulations. However, after completing this course, I am proud to say that I have acquired a new set of skills, knowledge and great connections. Not only did I learn a lot, but the expertise acquired in this class are also being applied to an extra-curricular project that I am currently working on. Beyond that, I believe that attention to detail with the conciseness of plot and axis labels, as well as cleanliness of the code are equally as important as the technical aspects of this course. Early on in the quarter, I struggled with paying attention to small details - axis labels, plot titles, new lines, quarto options. But as we progressed later on, I was able develop my skills in the said areas. I believe to have shown improvement in these aspects through the later labs and challenges (7, 8, 9), where I made sure to build graphs with no redundant plot labels and are clear and easy for the readers to take in. In challenge 7, there were abbreviations of some of the trout species which may possibly interfere with the reader's understanding. Because of that, I modified the display name for each species so that my readers are able to understand what they are looking at. I also use Quarto options with table of contents just to make it easier for my peers and instructor to navigate through the document. In these labs, I also believe to have demonstrated improvement on cleanliness and spacing. As a data scientist who will be sharing and working on the same code with peers, and reporting summaries in the future, being able to produce concise and neat results are important. In my extra-curricular research project, I am in charge of cleaning, transforming, and analyzing survey data collected from approximately 500 college students with over 100 columns to start with. Apart from doing the code alone, I also had to demonstrate my code to my research advisor, and build visualizations for my research leader and group. As an aspiring data scientist, I understand that apart from coding, a big part of my job will also be conveying, which is why it is important to make sure that the other side (audience, readers, & peers) will also be able to understand reports.
+For Lab 5, I was given the same feedback with piping my ggplot to avoid creating unnecessary data sets. In this peer review, I made sure to remember the feedback, learn from it, and use it to help my peers improve their output. On the other hand, I am also open and receptive towards feedback that is given to me.

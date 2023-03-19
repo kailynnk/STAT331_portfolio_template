@@ -1,0 +1,83 @@
+---
+title: "PA 9"
+format: html
+editor: visual
+---
+
+```{r}
+library(tidyverse)
+library(broom)
+
+mystery_animal <- read_csv(here::here("Practice Activities", "mystery_animal.csv"))
+```
+
+```{r}
+animal_lm <- mystery_animal %>% 
+  lm(weight_after ~ weight_before, data = .)
+```
+
+```{r}
+animal_lm %>% broom::augment() %>% 
+  ggplot(mapping = aes(y = .resid, x = .fitted)) +
+  geom_point()
+```
+
+PA 2
+
+```{r}
+q1 <- qunif(.95, 1.5, 3.5)
+q2 <- qnorm(.10, 4.6, 0.8)
+q3 <- 1 - pnorm(5, 4.6, 0.8)
+q3.2 <- 1 - pnorm(5, 4.6, 0.8)
+q4 <- 1 - pchisq(5, 4)
+q5 <- rnorm(100, 4.6, 0.8)
+
+```
+
+You manage to intercept a shipping notice for delivery to Professor Hill. It says the following:
+
+    Wells Fargo Shipment 1957
+
+    To:  Harold Hill, Mason City, Iowa
+    From:  Music Factory, Gary, Indiana
+
+    Items included:
+        Trombones: 76
+        Cornets: 110
+        Saxophones: 542
+        Clarinets: 318
+        Bassoons: 175
+        
+    Total Shipped Weight: 4532 lbs.
+
+This is your chance to catch Professor Hill in his lie!
+
+First, write a function that samples the correct number of weights of trombones, cornets (trumpets), and reed instruments (saxophones, clarinets, bassoons), and then returns the total weight of the shipment.
+
+Then, use that function to create random samples of the total weight of 1000 possible shipments.
+
+(Some code is provided for you below. Do not change the seed!)
+
+```{r}
+set.seed(1957)
+
+music_man <- function(n_tromb, n_cor, n_reed){
+  
+  trombones <- rnorm(n_tromb, 4.6, .8)
+  cornets <- runif(n_cor, 1.5, 3.5)
+  reeds <- rchisq(n_reed, 4)
+  
+  total <- sum(trombones) + sum(cornets) + sum(reeds)  
+  return(total)
+  
+}
+
+my_weights <- map_dbl(.x = 1:1000, 
+                      .f = ~ music_man(n_tromb = 76, 
+                                       n_cor = 110,
+                                       n_reed = 1035) ) 
+```
+
+```{r}
+sum(my_weights < 4532)
+```
