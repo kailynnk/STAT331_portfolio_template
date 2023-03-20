@@ -269,7 +269,7 @@ I've done this in the following provided assignments: Lab 1 - Lab 9
 -   Example 1
 
 ```{r r-2-1}
-# Lab 9 (Part 1, revised)
+# Lab 9 (Part 1, revised - values_fill())
 allisonsSummary <- aNames %>%
   filter(Name == "Allison") %>% 
   group_by(State, Sex) %>%
@@ -316,7 +316,7 @@ rescale_01 <- function(x) {
 -   Example 2
 
 ```{r r-3-2}
-# Lab 9 (Part 1, revised)
+# Lab 9 (Part 1, revised - values_fill())
 allisonsSummary <- aNames %>%
   filter(Name == "Allison") %>% 
   group_by(State, Sex) %>%
@@ -509,7 +509,7 @@ allison_Years <- allison_f %>%
 -   Example 2
 
 ```{r dvs-4-2}
-# Challenge 3 (Question 5.1.1 Male vs. Female, Revised to use latest across)
+# Challenge 3 (Question 5.1.1 Male vs. Female, Revised  - across())
 summary1 <- hiphop_coll |> 
   group_by(sex) |> 
   summarize(across(.cols = intl:unclassifiable, 
@@ -540,7 +540,7 @@ fishData |> summarise(across(.cols = everything(),
 -   Example 2
 
 ```{r dvs-5-2}
-# Challenge 3 (Question 5.1.1 Male vs. Female, Revised to use latest across)
+# Challenge 3 (Question 5.1.1 Male vs. Female, Revised  - across())
 summary1 <- hiphop_coll |> 
   group_by(sex) |> 
   summarize(across(.cols = intl:unclassifiable, 
@@ -578,7 +578,7 @@ al_summary %>%
 -   Example 2
 
 ```{r dvs-6-2}
-# Challenge 3 (Question 5.1.1 Male vs. Female, Revised to use latest across)
+# Challenge 3 (Question 5.1.1 Male vs. Female, Revised  - across())
 summary1 <- hiphop_coll |> 
   group_by(sex) |> 
   summarize(across(.cols = intl:unclassifiable, 
@@ -634,7 +634,7 @@ al_summary %>%
 -   using a single function call
 
 ```{r pe-1-one-call}
-# Lab 9 (Part 1, revised)
+# Lab 9 (Part 1, revised - values_fill())
 allisonsSummary <- aNames %>%
   filter(Name == "Allison") %>% 
   group_by(State, Sex) %>%
@@ -859,11 +859,11 @@ allison_lm %>%
 
 ## Revising My Thinking
 
-Despite showing proficiency in most of the learning targets, I was bad about a few things in the beginning. This can be seen in my earlier labs (lab 1 and lab 3) where i had insufficient and incorrect plot labels. There was also a lot of repeating and inefficient code in my initial Lab 3 submission. And I do acknowledge my stubborness when it came to adding a new line after every pipe. However, after continuous feed back from my peers and instructor, i was able to revise my thinking and apply feed back i my future assignments. I use my Lab 5 Time Plot as a reference to clear and readable plots, and believe that to be my cleanest and favorite one. I then improved my plot clarity even more, when I created plots in Lab 7 and Challenge 7. I have also began to incorporate the across function in almost all my labs after receiving feedback regarding efficiency. I have also learned another efficiecy technique after creating functions and loops in lab 7 and 8. I also completely followed adding of the new line after every pipe in lab 9. It was hard for me to follow at first, as the empty an long trailing white space bothered me. However, I now do acknowledge and appreciate adding a new line after every pipe. I understand how this simple instruction can make a difference, especially after several peer reviews. Overall, I believe to have demonstrated a proficiency in revised thinking throughout the entirety of the course. I take each feedback from my professor and peers into account in order to avoid making the same mistakes in the future. I also always made sure to submit a revision when I cam despite having only minor issues with my code.
+Despite showing proficiency in most of the learning targets, I was bad about a few things in the beginning. This can be seen in my earlier labs (lab 1 and lab 3) where i had insufficient and incorrect plot labels. There was also a lot of repeating and inefficient code in my initial Lab 3 submission. And I do acknowledge my stubborness when it came to adding a new line after every pipe. However, after continuous feed back from my peers and instructor, i was able to revise my thinking and apply feed back i my future assignments. I use my Lab 5 Time Plot as a reference to clear and readable plots, and believe that to be my cleanest and favorite one. I then improved my plot clarity even more, when I created plots in Lab 7 and Challenge 7. I began to incorporate the across function in almost all my labs after receiving feedback regarding efficiency, and revised it to use the most recent version. I have also learned another efficiency technique after creating functions and loops in lab 7 and 8. I completely followed adding of the new line after every pipe in Lab 8 and 9. It was hard for me to follow at first, as the empty an long trailing white space bothered me. However, I now do acknowledge and appreciate adding a new line after every pipe. I understand how this simple instruction can make a difference, especially after several peer reviews. Overall, I believe to have demonstrated a proficiency in revised thinking throughout the entirety of the course. I take each feedback from my professor and peers into account in order to avoid making the same mistakes in the future. I also always made sure to submit a revision when I can despite having only minor issues with my code.
 
 ## Extending My Thinking
 
-I believe to have demonstrated extended thinking in most of the activities as I usually refer to external resources. A lot of my extended thinking can be demonstrated by my plots and visuals, especially with its details and aesthetics. A lot of my data visualization examples in this portfolio show that I try to make my plot as aesthetically pleasing by using different plot themes, changing plot label fonts and sizes, and using a color palette, `facet_grid()` function, and an `x_scale_discrete` function. I believe Challenge 7 to support this my extended thinking as I use two different sources as a basis for trout measurements. Throughout the course, I have also made use of different Quarto options to spice up the appearance of my HTML file. This is especially demonstrated in my later labs where I incorporated a table of contents and a different Quarto theme. I have used these applications until the last lab.
+I believe to have demonstrated extended thinking in most of the activities as I usually refer to external resources. A lot of my extended thinking can be demonstrated by my plots and visuals, especially with its details and aesthetics. A lot of my data visualization examples in this portfolio show that I try to make my plot as aesthetically pleasing by using different plot themes, changing plot label fonts and sizes, and using a color palette, `facet_grid()` function, and an `x_scale_discrete` function. Throughout the course, I have also made use of different Quarto options to spice up the appearance of my HTML file. This is especially demonstrated in my later labs where I incorporated a table of contents and a different Quarto theme. I have used these applications until the last lab.
 
 ## Peer Support & Collaboration
 
