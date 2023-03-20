@@ -249,13 +249,12 @@ plusRescale |> pivot_longer(cols = c(Length, `Rescaled Length`),
 -   `pivot_wider()`
 
 ```{r wd-7-wide}
-# Lab 9 (Part 1)
+# Lab 9 (Part 1, revised - values_fill())
 allisonsSummary <- aNames %>%
   filter(Name == "Allison") %>% 
   group_by(State, Sex) %>%
   summarise(Allisons = sum(Count)) %>%
-  pivot_wider(names_from = Sex, values_from = Allisons) %>%
-  replace_na(list(F = 0, M = 0))
+  pivot_wider(names_from = Sex, values_from = Allisons, values_fill = 0)
 ```
 
 ## Reproducibility
@@ -798,7 +797,7 @@ summary3 |> slice_max(meanFamiliarity)
 -   Example 1
 
 ```{r dsm-1-1}
-# Practice Activity 8 (Part 2.1)
+# Practice Activity 9 (Part 2.1)
 q1 <- qunif(.95, 1.5, 3.5)
 q2 <- qnorm(.10, 4.6, 0.8)
 q3 <- 1 - pnorm(5, 4.6, 0.8)
@@ -810,7 +809,7 @@ q5 <- rnorm(100, 4.6, 0.8)
 -   Example 2
 
 ```{r dsm-1-2}
-# Practice Activity 8 (Part 2.2)
+# Practice Activity 9 (Part 2.2)
 set.seed(1957)
 
 music_man <- function(n_tromb, n_cor, n_reed){
@@ -863,7 +862,7 @@ Despite showing proficiency in most of the learning targets, I was bad about a f
 
 ## Extending My Thinking
 
-I believe to have demonstrated extended thinking in most of the activities as I usually refer to external resources. A lot of my extended thinking can be demonstrated by my plots and visuals, especially with its details and aesthetics. A lot of my data visualization examples in this portfolio show that I try to make my plot as aesthetically pleasing by using different plot themes, changing plot label fonts and sizes, and using a color palette, `facet_grid()` function, and an `x_scale_discrete` function. Throughout the course, I have also made use of different Quarto options to spice up the appearance of my HTML file. This is especially demonstrated in my later labs where I incorporated a table of contents and a different Quarto theme. I have used these applications until the last lab.
+I believe to have demonstrated extended thinking in most of the activities as I usually refer to external resources. A lot of my extended thinking can be demonstrated by my plots and visuals, especially with its details and aesthetics. A lot of my data visualization examples in this portfolio show that I try to make my plot as aesthetically pleasing by using different plot themes, changing plot label fonts and sizes, and using a color palette, `facet_grid()` function, and an `x_scale_discrete` function. In Lab 9, I made use of relocate function just to switch up the position of the column. I also made sure to add a little bit of creativity and organization in all of my Challenge 9 questions. Throughout the course, I have also made use of different Quarto options to spice up the appearance of my HTML file. This is especially demonstrated in my later labs where I incorporated a table of contents and a different Quarto theme. I have used these applications until the last lab.
 
 ## Peer Support & Collaboration
 
@@ -871,4 +870,4 @@ I believe to be highly proficient in peer support and collaboration. In the week
 
 ![](images/Screen%20Shot%202023-02-19%20at%204.56.59%20PM.png){fig-align="center" width="260"}
 
-For Lab 5, I was given the same feedback with piping my ggplot to avoid creating unnecessary data sets. In this peer review, I made sure to remember the feedback, learn from it, and use it to help my peers improve their output. On the other hand, I am also open and receptive towards feedback that is given to me.
+For Lab 5, I was given the same feedback with piping my ggplot to avoid creating unnecessary data sets. In this peer review, I made sure to remember the feedback, learn from it, and use it to help my peers improve their output. After week 5, I continued to collaborate and work with my group on the practice activities. On the other hand, I am also open and receptive towards feedback that is given to me.
