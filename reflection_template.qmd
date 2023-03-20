@@ -233,7 +233,8 @@ plusRescale <- fishData |>
   mutate(`Rescaled Length` = rescale_01(length)) |>
   rename(Length = length)
 
-plusRescale |> pivot_longer(cols = c(Length, `Rescaled Length`), 
+plusRescale |> 
+  pivot_longer(cols = c(Length, `Rescaled Length`), 
                names_to = "Type", 
                values_to = "Length") |>
   ggplot(mapping = aes(x = year, y = Length)) +
@@ -347,7 +348,8 @@ plusRescale <- fishData |>
   mutate(`Rescaled Length` = rescale_01(length)) |>
   rename(Length = length)
 
-plusRescale |> pivot_longer(cols = c(Length, `Rescaled Length`), 
+plusRescale |> 
+  pivot_longer(cols = c(Length, `Rescaled Length`), 
                names_to = "Type", 
                values_to = "Length") |>
   ggplot(mapping = aes(x = year, y = Length)) +
@@ -421,15 +423,16 @@ ggplot(data = surveys,
 
 ```{r dvs-2-2}
 # Challenge 07 (Part 3)
-newData |> mutate(species = case_when(species == "RBT" ~ "Rainbow",
-                                      species == "WCT" ~ "Westslope Cutthroat",
-                                      TRUE ~ species),
-                  species = str_c(species, " ", "Trout" )) |>
+newData |> 
+  mutate(species = case_when(species == "RBT" ~ "Rainbow",
+                             species == "WCT" ~ "Westslope Cutthroat",
+                             TRUE ~ species),
+         species = str_c(species, " ", "Trout")) |>
   group_by(year, species, section) |>
   summarize(meanCondition = mean(condition, na.rm = TRUE)) |>
   ggplot(mapping = aes(x = year, y = meanCondition, color = section)) +
   geom_line() +
-  facet_wrap(~species) +
+  facet_wrap(~ species) +
   theme_linedraw() +
   labs(title = "The Average Condition Of Trout Species in Different Sections From 1989 to 2006",
        x = "Years",
@@ -781,8 +784,9 @@ plusRescale |>
 
 ```{r pe-4-2}
 # Lab 3 (Question 13)
-summary3 <- hiphop_clean |> filter(sex == "Male", 
-                       ethnic_2 == "white", age > 30) |>
+summary3 <- hiphop_clean |> 
+  filter(sex == "Male", 
+         ethnic_2 == "white", age > 30) |>
   group_by(word) |>
   summarise(meanFamiliarity = mean(familiarity))
 
